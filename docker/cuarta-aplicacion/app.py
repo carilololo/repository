@@ -2,14 +2,13 @@ import boto3
 from flask import Flask, request, jsonify, send_file
 import os
 
-import json
 
 app = Flask(__name__)
 
 @app.rout('/voice', methods=['POST'])
 def voice():
   try:
-    data = return.json
+    data = request.json
     text = data.get('text')
     voice = "Mia"
     output_format = "mp3"
@@ -18,7 +17,7 @@ def voice():
       return jsonify({'error':'No se recibio el texto'}), 400
     
     
-    client = boto3.client('polly',region_name = 'us-east-1')
+    polly = boto3.client('polly',region_name = 'us-east-1')
 
     response = polly.synthesize_speech(
       Text = text,
